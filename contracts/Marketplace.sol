@@ -2,7 +2,7 @@
 pragma solidity ^0.8.4;
 
 import "./Token.sol";
-import "./Interfaces/TokenInterface.sol";
+import "./interfaces/TokenInterface.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
