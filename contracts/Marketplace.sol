@@ -21,8 +21,8 @@ contract Marketplace is Ownable {
 
     Counters.Counter idCounter;
 
-    constructor(IToken token, uint256 _feePercent) {
-        token = IToken(token);
+    constructor(IToken _token, uint256 _feePercent) {
+        token = IToken(_token);
         feePercent = _feePercent;
     }
 
@@ -34,23 +34,23 @@ contract Marketplace is Ownable {
         address indexed buyer
     );
 
+    event Created(
+        uint256 nftId,
+        address indexed nftAddress,
+        uint256 price,
+        address indexed creator
+    );
+
     function initialMint(string memory _newTokenUri, uint256 _price) external {
         idCounter.increment();
         token.mintFirst(msg.sender, idCounter.current(), _newTokenUri);
         idToNft[idCounter.current()] = Nft(_price, payable(msg.sender));
-        emit Bought(
-            idCounter.current(),
-            address(token),
-            _price,
-            address(this),
-            msg.sender
-        );
+        emit Created(idCounter.current(), address(token), _price, msg.sender);
     }
 
     function buy(
         uint256 _id,
         uint256 _amount,
-        string memory _uri,
         bytes memory _data
     ) external payable {
         require(
