@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/siarhei/Projects/Paus.tv/Paus.tv_test.assigment_blockhain/contracts/Interfaces/TokenInterface.sol": {
-      "lastModificationDate": 1656424092964,
-      "contentHash": "ddbb7068256464181f107d4d78b3b191",
+      "lastModificationDate": 1656491925963,
+      "contentHash": "f3331d2bb1bd5e456a56eb11d145a36e",
       "sourceName": "contracts/Interfaces/TokenInterface.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -111,8 +111,8 @@
       ]
     },
     "/home/siarhei/Projects/Paus.tv/Paus.tv_test.assigment_blockhain/contracts/Marketplace.sol": {
-      "lastModificationDate": 1656428721577,
-      "contentHash": "e23458598a427e521a9eced59387197b",
+      "lastModificationDate": 1656494592316,
+      "contentHash": "cb98c23dac5106ada75e4b44aa718b18",
       "sourceName": "contracts/Marketplace.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -140,7 +140,8 @@
       "imports": [
         "./Token.sol",
         "./Interfaces/TokenInterface.sol",
-        "@openzeppelin/contracts/utils/Counters.sol"
+        "@openzeppelin/contracts/utils/Counters.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
       ],
       "versionPragmas": [
         "^0.8.4"
@@ -150,8 +151,8 @@
       ]
     },
     "/home/siarhei/Projects/Paus.tv/Paus.tv_test.assigment_blockhain/contracts/Token.sol": {
-      "lastModificationDate": 1656423121899,
-      "contentHash": "0ec4794901df3e84ea43b5ff3e002c76",
+      "lastModificationDate": 1656491918739,
+      "contentHash": "db0c02056e0423c10c9ec310ba6ed815",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.4",
@@ -553,6 +554,43 @@
       ],
       "artifacts": [
         "Counters"
+      ]
+    },
+    "/home/siarhei/Projects/Paus.tv/Paus.tv_test.assigment_blockhain/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1656403117741,
+      "contentHash": "8398972af73b4e9e5ff3b31cad86234f",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.4",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
       ]
     }
   }

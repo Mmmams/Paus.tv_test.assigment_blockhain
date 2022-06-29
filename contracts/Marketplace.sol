@@ -4,12 +4,18 @@ pragma solidity ^0.8.4;
 import "./Token.sol";
 import "./Interfaces/TokenInterface.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Marketplace {
+contract Marketplace is Ownable {
     IToken internal token;
-    address payable public feeAccount; // account that receives fees
-    uint256 public feePercent; // fee percentage on sales
-    mapping(uint256 => uint256) idToPrice;
+    uint256 public feePercent;
+
+    struct Nft {
+        uint256 price;
+        address payable creator;
+    }
+
+    mapping(uint256 => Nft) idToNft;
 
     using Counters for Counters.Counter;
 
@@ -17,7 +23,6 @@ contract Marketplace {
 
     constructor(IToken token, uint256 _feePercent) {
         token = IToken(token);
-        feeAccount = payable(msg.sender);
         feePercent = _feePercent;
     }
 
@@ -32,7 +37,7 @@ contract Marketplace {
     function initialMint(string memory _newTokenUri, uint256 _price) external {
         idCounter.increment();
         token.mintFirst(msg.sender, idCounter.current(), _newTokenUri);
-        idToPrice[idCounter.current()] = _price;
+        idToNft[idCounter.current()] = Nft(_price, payable(msg.sender));
         emit Bought(
             idCounter.current(),
             address(token),
@@ -49,18 +54,28 @@ contract Marketplace {
         bytes memory _data
     ) external payable {
         require(
-            msg.value >= idToPrice[_id],
+            msg.value >= idToNft[_id].price,
             "You need more currency for make a transaction"
         );
-
+        address creator = idToNft[_id].creator;
         token.mint(msg.sender, _id, _amount, _data);
-
+        (bool sent, ) = creator.call{
+            value: (msg.value * (100 - feePercent)) / 100
+        }("");
+        require(sent, "Transaction failed");
         emit Bought(
             _id,
             address(token),
-            idToPrice[_id],
+            idToNft[_id].price,
             address(this),
             msg.sender
         );
+    }
+
+    function withdraw(address recipient) external onlyOwner returns (bool) {
+        require(address(this).balance >= 0, "Balance is zero");
+        (bool sent, ) = recipient.call{value: address(this).balance}("");
+        require(sent, "Transaction failed");
+        return true;
     }
 }

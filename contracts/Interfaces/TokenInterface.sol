@@ -27,8 +27,4 @@ interface IToken is IERC1155 {
         uint256 id,
         string memory newTokenUri
     ) external;
-
-    function setTokenURI(uint256 tokenId, string memory newTokenUri)
-        external
-        returns (bool);
 }

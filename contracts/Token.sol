@@ -15,56 +15,58 @@ contract PausToken is ERC1155, AccessControl {
 
     event SetTokenURI(uint256 tokenId, string newTokenUri);
 
-    function setMinterRole(address minter)
+    function setMinterRole(address _minter)
         external
         onlyRole(DEFAULT_ADMIN_ROLE)
     {
-        _grantRole(MINTER_ROLE, minter);
+        _grantRole(MINTER_ROLE, _minter);
     }
 
-    function setURI(string memory newuri)
+    function setURI(string memory _newuri)
         external
         onlyRole(DEFAULT_ADMIN_ROLE)
     {
-        _setURI(newuri);
+        _setURI(_newuri);
     }
 
     function mint(
-        address account,
-        uint256 id,
-        uint256 amount,
-        bytes memory data
+        address _account,
+        uint256 _id,
+        uint256 _amount,
+        bytes memory _data
     ) external onlyRole(MINTER_ROLE) {
-        _mint(account, id, amount, data);
+        _mint(_account, _id, _amount, _data);
     }
 
-    function mintFirst(address account, uint256 id)
-        external
-        onlyRole(MINTER_ROLE)
-    {
-        _mint(account, id, 1, "0x");
+    function mintFirst(
+        address _account,
+        uint256 _id,
+        string memory _newTokenUri
+    ) external onlyRole(MINTER_ROLE) {
+        _mint(_account, _id, 1, "0x");
+        setTokenURI(_id, _newTokenUri);
     }
 
     function mintBatch(
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
+        address _to,
+        uint256[] memory _ids,
+        uint256[] memory _amounts,
+        bytes memory _data
     ) external onlyRole(MINTER_ROLE) {
-        _mintBatch(to, ids, amounts, data);
+        _mintBatch(_to, _ids, _amounts, _data);
     }
 
-    function exists(uint256 tokenId) internal view returns (uint256) {
-        return balanceOf(address(this), tokenId);
+    function exists(uint256 _tokenId) internal view returns (uint256) {
+        return balanceOf(address(this), _tokenId);
     }
 
-    function setTokenURI(uint256 tokenId, string memory newTokenUri)
-        external
-        onlyRole(DEFAULT_ADMIN_ROLE)
+    function setTokenURI(uint256 _tokenId, string memory _newTokenUri)
+        internal
+        onlyRole(MINTER_ROLE)
         returns (bool)
     {
-        idToUri[tokenId] = newTokenUri;
-        emit SetTokenURI(tokenId, newTokenUri);
+        idToUri[_tokenId] = _newTokenUri;
+        emit SetTokenURI(_tokenId, _newTokenUri);
         return true;
     }
 
