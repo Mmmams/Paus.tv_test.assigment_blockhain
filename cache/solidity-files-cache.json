@@ -2,7 +2,7 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/siarhei/Projects/Paus.tv/Paus.tv_test.assigment_blockhain/contracts/interfaces/TokenInterface.sol": {
-      "lastModificationDate": 1656491925963,
+      "lastModificationDate": 1656689056624,
       "contentHash": "f3331d2bb1bd5e456a56eb11d145a36e",
       "sourceName": "contracts/interfaces/TokenInterface.sol",
       "solcConfig": {
