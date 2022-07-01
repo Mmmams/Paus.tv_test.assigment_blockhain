@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 
 contract PausToken is ERC1155, AccessControl {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    mapping(uint256 => string) private idToUri;
+    mapping(uint256 => string) public idToUri;
 
     constructor() ERC1155("https://ipfs.io/ipfs/") {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);

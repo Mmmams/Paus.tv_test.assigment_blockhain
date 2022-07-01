@@ -78,4 +78,12 @@ contract Marketplace is Ownable {
         require(sent, "Transaction failed");
         return true;
     }
+
+    function getBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+
+    function getCurrentId() external view returns (uint256) {
+        return idCounter.current();
+    }
 }
